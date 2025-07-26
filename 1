@@ -4,7 +4,11 @@ import { Button } from "@inkonchain/ink-kit";
 ignore = [
 
   # difference is unmaintained
- 
+   # difference is unmaintained
+  "RUSTSEC-2023-0071",
+  "RUSTSEC-2020-0095",
+  # proc-macro-error 
+const theme = getMyCurrentTheme();
  
 # rsa Marvin Attack
 pnpm install @inkonchain/ink-kit
@@ -16,11 +20,7 @@ USTSEC-2023-0071",
   # proc-macro-error is unmaintained
   "RUSTSEC-2024-0370",
  "RUSTSEC-2023-0071",
-  # difference is unmaintained
-  "RUSTSEC-2023-0071",
-  "RUSTSEC-2020-0095",
-  # proc-macro-error 
-const theme = getMyCurrentTheme();
+
 useInkThemeClass(theme === "light" ? "ink:neo-theme" : "ink:dark-theme");
 :root {
   --ink-button-primary: rgb(10, 55, 10);
