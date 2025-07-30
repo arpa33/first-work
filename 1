@@ -2,7 +2,9 @@
 import { Button } from "@inkonchain/ink-kit";
 [advisories]
 ignore = [
-
+"RUSTSEC-2020-0095",
+  # proc-macro-error is unmaintained
+  "RUSTSEC-2024-0370",
   # difference is unmaintained
    # difference is unmaintained
   "RUSTSEC-2023-0071",
@@ -16,9 +18,7 @@ pnpm install @inkonchain/ink-kit
 USTSEC-2023-0071",
   # difference is unmaintained
 ] # rsa Marvin Attack
- "RUSTSEC-2020-0095",
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
+ 
  "RUSTSEC-2023-0071",
 
 useInkThemeClass(theme === "light" ? "ink:neo-theme" : "ink:dark-theme");
