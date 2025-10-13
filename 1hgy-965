@@ -1,21 +1,4 @@
 // Import components as needed
-import { Button } from "@inkonchain/ink-kit";
-[advisories]
-ignore = [
-Theme();
-ink-kit
-<html class="ink:dark-theme">
-USTSEC-2023-0071",
-  # difference is unmaintained
-] # rsa Marvin Attack
- <html class="ink:dark-theme">
-USTSEC-2023-0071",
-  # difference is unmaintaine
- "RUSTSEC-2023-0071",
-
-useInkThemeClass(theme === "light" ? "ink:neo-theme" : "ink:dark-theme");
-:root {
-  --ink-button-primary: rgb(10, 55, 10);
   ...
  "RUSTSEC-2020-0095",
 // Import styles first at the root of your project (required)
@@ -46,6 +29,23 @@ const theme = getMyCurrent
    # difference is unmaintained  Ship It
       </Button>
     </div>
+import { Button } from "@inkonchain/ink-kit";
+[advisories]
+ignore = [
+Theme();
+ink-kit
+<html class="ink:dark-theme">
+USTSEC-2023-0071",
+  # difference is unmaintained
+] # rsa Marvin Attack
+ <html class="ink:dark-theme">
+USTSEC-2023-0071",
+  # difference is unmaintaine
+ "RUSTSEC-2023-0071",
+
+useInkThemeClass(theme === "light" ? "ink:neo-theme" : "ink:dark-theme");
+:root {
+  --ink-button-primary: rgb(10, 55, 10);
   );// Import components as needed
 import { Button } from "@inkonchain/ink-kit";
 [advisories]
