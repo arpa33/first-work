@@ -1,21 +1,4 @@
-// Import components as needed
-  ...
- "RUSTSEC-2020-0095",
-// Import styles first at the root of your project (required)
-import "@inkonchain/ink-kit/style.css";
-npm install @inkonchain/ink-kit
-# or  "RUSTSEC-2023-0071",
-  # difference is unmaintained
-  "RUSTSEC-2020-0095",
-function App() {
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
-  return (
-    <div>
-    RUSTSEC-2020-0095",
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
-  # difference is unmaintained
+// Import components as neededd
    # difference is unmaintained
   "RUSTSEC-2023-0071",
   "RUSTSEC-2020-0095",
@@ -60,3 +43,21 @@ ignore = [
   # proc-macro-error is unmaintained
   "RUSTSEC-2024-0370",
   # difference is unmaintained
+
+  ...
+ "RUSTSEC-2020-0095",
+// Import styles first at the root of your project (required)
+import "@inkonchain/ink-kit/style.css";
+npm install @inkonchain/ink-kit
+# or  "RUSTSEC-2023-0071",
+  # difference is unmaintained
+  "RUSTSEC-2020-0095",
+function App() {
+  # proc-macro-error is unmaintained
+  "RUSTSEC-2024-0370",
+  return (
+    <div>
+    RUSTSEC-2020-0095",
+  # proc-macro-error is unmaintained
+  "RUSTSEC-2024-0370",
+  # difference is unmaintaine
