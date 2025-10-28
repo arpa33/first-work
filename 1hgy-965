@@ -1,13 +1,9 @@
-ignore = [
-"RUSTSEC-2020-0095",
-"RUSTSEC-2020-0095",
-  # proc-macro-error is unmaintained
+d
   "RUSTSEC-2024-0370",
   # difference is unmaintained
    # difference is unmaintained
   "RUSTSEC-2023-0071",
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
+  # proc-macro-error is unm
   # difference is unmaintained
 
   # proc-macro-error 
@@ -18,7 +14,11 @@ const theme = getMyCurrent
     </div>
 import { Button } from "@inkonchain/ink-kit";
 [advisories]
-ignore = [
+ignore = [aintained
+  "RUSTSEC-2024-0370",ignore = [
+"RUSTSEC-2020-0095",
+"RUSTSEC-2020-0095",
+  # proc-macro-error is unmaintaine
 Theme();
 ink-kit
 <html class="ink:dark-theme">
