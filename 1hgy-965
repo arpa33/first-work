@@ -1,63 +1,48 @@
-d
-  "RUSTSEC-2024-0370",
-  # difference is unmaintained
-   # difference is unmaintained
-  "RUSTSEC-2023-0071",
-  # proc-macro-error is unm
-  # difference is unmaintained
+import time
 
-  # proc-macro-error 
-const theme = getMyCurrent
-  # difference is unmaintained
-   # difference is unmaintained  Ship It
-      </Button>
-    </div>
-import { Button } from "@inkonchain/ink-kit";
-[advisories]
-ignore = [aintained
-  "RUSTSEC-2024-0370",ignore = [
-"RUSTSEC-2020-0095",
-"RUSTSEC-2020-0095",
-  # proc-macro-error is unmaintaine
-Theme();
-ink-kit
-<html class="ink:dark-theme">
-USTSEC-2023-0071",
-  # difference is unmaintained
-] # rsa Marvin Attack
- <html class="ink:dark-theme">
-USTSEC-2023-0071",
-  # difference is unmaintaine
- "RUSTSEC-2023-0071",
-// Import components as neededd
-   # difference is unmaintained
-  "RUSTSEC-2023-0071",
-  "RUSTSEC-2020-0095",
-# rsa Marvin Attack
-pnpm install @inkonchain/
-  "RUSTSEC-2023-0071",
-  "RUSTSEC-2020-0095",
-useInkThemeClass(theme === "light" ? "ink:neo-theme" : "ink:dark-theme");
-:root {
-  --ink-button-primary: rgb(10, 55, 10);
-  );// Import components as needed
-import { Button } from "@inkonchain/ink-kit";
-[advisories]
+class Washer:
+    def __init__(self):
+        self.state = "IDLE"
 
-  ...
- "RUSTSEC-2020-0095",
-// Import styles first at the root of your project (required)
-import "@inkonchain/ink-kit/style.css";
-npm install @inkonchain/ink-kit
-# or  "RUSTSEC-2023-0071",
-  # difference is unmaintained
-  "RUSTSEC-2020-0095",
-function App() {
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
-  return (
-    <div>
-    RUSTSEC-2020-0095",
-  # proc-macro-error is unmaintained
-  "RUSTSEC-2024-0370",
-  # difference is unmaintaine
+    def fill_water(self):
+        print("Filling water...")
+        time.sleep(2)
+
+    def wash(self):
+        print("Washing...")
+        for _ in range(5):
+            print("Motor: slow spin LEFT")
+            time.sleep(1)
+            print("Motor: slow spin RIGHT")
+            time.sleep(1)
+
+    def rinse(self):
+        print("Rinsing...")
+        time.sleep(3)
+
+    def spin(self):
+        print("Spinning for water removal...")
+        time.sleep(3)
+
+    def anti_wrinkle(self):
+        print("Anti-wrinkle phase:")
+        for _ in range(10):
+            print("Drum tumble slowly to prevent wrinkles…")
+            time.sleep(0.5)
+
+    def dry(self):
+        print("Drying with warm air...")
+        for _ in range(6):
+            print("Fan + heater LOW + slow drum rotation")
+            time.sleep(1)
+
+    def full_cycle(self):
+        self.state = "RUNNING"
+        self.fill_water()
+        self.wash()
+        self.rinse()
+        self.spin()
+        self.dry()
+        self.anti_wrinkle()
+        self.state = "DONE"
+        print("Laundry completed without wrinkles ✔")
