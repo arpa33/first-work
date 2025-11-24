@@ -1,48 +1,120 @@
-import time
+smart-water-purifier/
+├── firmware/
+│   ├── src/
+│   │   ├── main.ino
+│   │   └── sensors_sim.h
+│   └── platformio.ini   (یا استفاده از Arduino IDE)
+│
+├── controller/
+│   ├── app.py
+│   ├── purifier.py
+│   ├── sensors.py
+│   └── requirements.txt
+│
+├── simulator/
+│   └── sensor_simulator.py
+│
+├── README.md
+├── Dockerfile
+└── .github/
+    └── workflows/
+        └── python-tests.yml
+// main.ino (ESP32 / Arduino)
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include "sensors_sim.h"
 
-class Washer:
-    def __init__(self):
-        self.state = "IDLE"
+// --- پین‌ها (مثال)
+const int PUMP_PIN = 16;
+const int SOLENOID_PIN = 17;
+const int UV_PIN = 18;
+const int TDS_ADC = 34;    // ADC input برای TDS یا سنسور مشابه
+const int TURBIDITY_ADC = 35;
+const int LEVEL_PIN = 14;  // دیجیتال: سطح آب (فلوتر)
 
-    def fill_water(self):
-        print("Filling water...")
-        time.sleep(2)
+// --- تنظیمات شبکه & سرور کنترل مرکزی
+const char* ssid = "YOUR_SSID";
+const char* password = "YOUR_PASSWORD";
+const char* CONTROLLER_URL = "http://192.168.1.100:8080/telemetry"; // آدرس سرور کنترل مرکزی
 
-    def wash(self):
-        print("Washing...")
-        for _ in range(5):
-            print("Motor: slow spin LEFT")
-            time.sleep(1)
-            print("Motor: slow spin RIGHT")
-            time.sleep(1)
+// زمان‌بندی
+unsigned long lastSend = 0;
+const unsigned long sendInterval = 5000; // ارسال داده هر 5s
 
-    def rinse(self):
-        print("Rinsing...")
-        time.sleep(3)
+void setup() {
+  Serial.begin(115200);
 
-    def spin(self):
-        print("Spinning for water removal...")
-        time.sleep(3)
+  pinMode(PUMP_PIN, OUTPUT);
+  pinMode(SOLENOID_PIN, OUTPUT);
+  pinMode(UV_PIN, OUTPUT);
+  pinMode(LEVEL_PIN, INPUT_PULLUP);
 
-    def anti_wrinkle(self):
-        print("Anti-wrinkle phase:")
-        for _ in range(10):
-            print("Drum tumble slowly to prevent wrinkles…")
-            time.sleep(0.5)
+  digitalWrite(PUMP_PIN, LOW);
+  digitalWrite(SOLENOID_PIN, LOW);
+  digitalWrite(UV_PIN, LOW);
 
-    def dry(self):
-        print("Drying with warm air...")
-        for _ in range(6):
-            print("Fan + heater LOW + slow drum rotation")
-            time.sleep(1)
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi");
+}
 
-    def full_cycle(self):
-        self.state = "RUNNING"
-        self.fill_water()
-        self.wash()
-        self.rinse()
-        self.spin()
-        self.dry()
-        self.anti_wrinkle()
-        self.state = "DONE"
-        print("Laundry completed without wrinkles ✔")
+void loop() {
+  // خواندن سنسورها — اینجا از تابع شبیه‌ساز استفاده می‌کنیم تا بدون سخت‌افزار واقعی هم کار کند
+  float tds = read_tds();
+  float turbidity = read_turbidity();
+  bool level = digitalRead(LEVEL_PIN) == HIGH;
+
+  Serial.printf("TDS: %.1f ppm, Turbidity: %.2f NTU, Level: %d\n", tds, turbidity, level);
+
+  // منطق سادهٔ تصفیه
+  if (tds > 300.0 || turbidity > 5.0) {
+    // نیاز به فیلتر/احتمالاً شستشو معکوس یا روشن کردن پمپ
+    digitalWrite(SOLENOID_PIN, HIGH); // باز کردن مسیر به فیلتر
+    digitalWrite(PUMP_PIN, HIGH);     // روشن کردن پمپ
+    digitalWrite(UV_PIN, LOW);        // UV بعد از فیلتر
+  } else {
+    // آب با کیفیت -> خاموش کردن پمپ، اما UV را برای ضدعفونی فعال کن
+    digitalWrite(PUMP_PIN, LOW);
+    digitalWrite(SOLENOID_PIN, LOW);
+    digitalWrite(UV_PIN, HIGH);
+  }
+
+  // اگر سطح آب کم است، خاموش کن
+  if (!level) {
+    digitalWrite(PUMP_PIN, LOW);
+    digitalWrite(SOLENOID_PIN, LOW);
+    digitalWrite(UV_PIN, LOW);
+    Serial.println("Low water level! Stopping system.");
+  }
+
+  // ارسال تلِمتری به کنترلر مرکزی هر sendInterval میلی‌ثانیه
+  if (millis() - lastSend > sendInterval) {
+    sendTelemetry(tds, turbidity, level);
+    lastSend = millis();
+  }
+
+  delay(1000);
+}
+
+void sendTelemetry(float tds, float turbidity, bool level) {
+  if (WiFi.status() != WL_CONNECTED) return;
+  HTTPClient http;
+  http.begin(CONTROLLER_URL);
+  http.addHeader("Content-Type", "application/json");
+  String payload = "{";
+  payload += "\"tds\":" + String(tds, 1) + ",";
+  payload += "\"turbidity\":" + String(turbidity, 2) + ",";
+  payload += "\"level\":" + String(level ? 1 : 0);
+  payload += "}";
+  int code = http.POST(payload);
+  if (code > 0) {
+    Serial.printf("Telemetry sent, code=%d\n", code);
+  } else {
+    Serial.printf("Telemetry failed: %s\n", http.errorToString(code).c_str());
+  }
+  http.end();
+}
