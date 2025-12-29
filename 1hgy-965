@@ -44,11 +44,7 @@ const unsigned long sendInterval = 5000; // ارسال داده هر 5s
 void setup() {
   Serial.begin(115200);
 
-  pinMode(PUMP_PIN, OUTPUT);
-  pinMode(SOLENOID_PIN, OUTPUT);
-  pinMode(UV_PIN, OUTPUT);
-  pinMode(LEVEL_PIN, INPUT_PULLUP);
-
+ 
   digitalWrite(PUMP_PIN, LOW);
   digitalWrite(SOLENOID_PIN, LOW);
   digitalWrite(UV_PIN, LOW);
@@ -61,6 +57,10 @@ void setup() {
   }
   Serial.println("\nConnected to WiFi");
 }
+ pinMode(PUMP_PIN, OUTPUT);
+  pinMode(SOLENOID_PIN, OUTPUT);
+  pinMode(UV_PIN, OUTPUT);
+  pinMode(LEVEL_PIN, INPUT_PULLUP);
 
 void loop() {
   // خواندن سنسورها — اینجا از تابع شبیه‌ساز استفاده می‌کنیم تا بدون سخت‌افزار واقعی هم کار کند
