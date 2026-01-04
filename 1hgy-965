@@ -19,10 +19,6 @@ smart-water-purifier/
 └── .github/
     └── workflows/
         └── python-tests.yml
-// main.ino (ESP32 / Arduino)
-#include <WiFi.h>
-#include <HTTPClient.h>
-#include "sensors_sim.h"
 
 // --- پین‌ها (مثال)
 const int PUMP_PIN = 16;
@@ -52,6 +48,10 @@ void setup() {
   digitalWrite(PUMP_PIN, LOW);
   digitalWrite(SOLENOID_PIN, LOW);
   digitalWrite(UV_PIN, LOW);
+// main.ino (ESP32 / Arduino)
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include "sensors_sim.h"
 
   WiFi.begin(ssid, password);
   Serial.print("Connecting to WiFi");
