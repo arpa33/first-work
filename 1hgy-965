@@ -43,7 +43,18 @@ void setup() {
   pinMode(SOLENOID_PIN, OUTPUT);
   pinMode(UV_PIN, OUTPUT);
   pinMode(LEVEL_PIN, INPUT_PULLUP);
-
+void sendTelemetry(float tds, float turbidity, bool level) {
+  if (WiFi.status() != WL_CONNECTED) return;
+  HTTPClient http;
+  http.begin(CONTROLLER_URL);
+  http.addHeader("Content-Type", "application/json");
+  String payload = "{";
+  payload += "\"tds\":" + String(tds, 1) + ",";
+  payload += "\"turbidity\":" + String(turbidity, 2) + ",";
+  payload += "\"level\":" + String(level ? 1 : 0);
+  payload += "}";
+  int code = http.POST(payload);
+  if (code > 0) {
  
   digitalWrite(PUMP_PIN, LOW);
   digitalWrite(SOLENOID_PIN, LOW);
@@ -100,18 +111,7 @@ void loop() {
   delay(1000);
 }
 
-void sendTelemetry(float tds, float turbidity, bool level) {
-  if (WiFi.status() != WL_CONNECTED) return;
-  HTTPClient http;
-  http.begin(CONTROLLER_URL);
-  http.addHeader("Content-Type", "application/json");
-  String payload = "{";
-  payload += "\"tds\":" + String(tds, 1) + ",";
-  payload += "\"turbidity\":" + String(turbidity, 2) + ",";
-  payload += "\"level\":" + String(level ? 1 : 0);
-  payload += "}";
-  int code = http.POST(payload);
-  if (code > 0) {
+
     Serial.printf("Telemetry sent, code=%d\n", code);
   } else {
     Serial.printf("Telemetry failed: %s\n", http.errorToString(code).c_str());
