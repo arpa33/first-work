@@ -20,22 +20,19 @@ smart-water-purifier/
     └── workflows/
         └── python-tests.yml
 
-// --- پین‌ها (مثال)
+// --- ()
 const int PUMP_PIN = 16;
 const int SOLENOID_PIN = 17;
 const int UV_PIN = 18;
-const int TDS_ADC = 34;    // ADC input برای TDS یا سنسور مشابه
-const int TURBIDITY_ADC = 35;
-const int LEVEL_PIN = 14;  // دیجیتال: سطح آب (فلوتر)
-
-// --- تنظیمات شبکه & سرور کنترل مرکزی
+const int TDS_ADC = 34;    // ADC input برای TDS 
+const int LEVEL_PIN = 14;  // 
+// --- 
 const char* ssid = "YOUR_SSID";
 const char* password = "YOUR_PASSWORD";
-const char* CONTROLLER_URL = "http://192.168.1.100:8080/telemetry"; // آدرس سرور کنترل مرکزی
-
+const char* CONTROLLER_URL = "http://192.168.1.100:8080/telemetry"; //
 // زمان‌بندی
 unsigned long lastSend = 0;
-const unsigned long sendInterval = 5000; // ارسال داده هر 5s
+const unsigned long sendInterval = 5000; // 
 
 void setup() {
   Serial.begin(115200);
@@ -74,8 +71,7 @@ void sendTelemetry(float tds, float turbidity, bool level) {
 }
 
 void loop() {
-  // خواندن سنسورها — اینجا از تابع شبیه‌ساز استفاده می‌کنیم تا بدون سخت‌افزار واقعی هم کار کند
-  float tds = read_tds();
+  // loat tds = read_tds();
   float turbidity = read_turbidity();
   bool level = digitalRead(LEVEL_PIN) == HIGH;
 
@@ -84,17 +80,17 @@ void loop() {
   // منطق سادهٔ تصفیه
   if (tds > 300.0 || turbidity > 5.0) {
     // نیاز به فیلتر/احتمالاً شستشو معکوس یا روشن کردن پمپ
-    digitalWrite(SOLENOID_PIN, HIGH); // باز کردن مسیر به فیلتر
-    digitalWrite(PUMP_PIN, HIGH);     // روشن کردن پمپ
-    digitalWrite(UV_PIN, LOW);        // UV بعد از فیلتر
+    digitalWrite(SOLENOID_PIN, HIGH); // 
+    digitalWrite(PUMP_PIN, HIGH);     // 
+    digitalWrite(UV_PIN, LOW);        //  
   } else {
-    // آب با کیفیت -> خاموش کردن پمپ، اما UV را برای ضدعفونی فعال کن
+
     digitalWrite(PUMP_PIN, LOW);
     digitalWrite(SOLENOID_PIN, LOW);
     digitalWrite(UV_PIN, HIGH);
   }
 
-  // اگر سطح آب کم است، خاموش کن
+  // 
   if (!level) {
     digitalWrite(PUMP_PIN, LOW);
     digitalWrite(SOLENOID_PIN, LOW);
