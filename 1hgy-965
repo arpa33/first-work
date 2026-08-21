@@ -20,14 +20,14 @@ smart-water-purifier/
     └── workflows/
         └── python-tests.yml
 
+unsigned long lastSend = 0;
+const unsigned long sendInterval = 5000; // 
+
 // --- 
 const char* ssid = "YOUR_SSID";
 const char* password = "YOUR_PASSWORD";
 const char* CONTROLLER_URL = "http://192.168.1.100:8080/telemetry"; //
-// زمان‌بندی
-unsigned long lastSend = 0;
-const unsigned long sendInterval = 5000; // 
-
+// 
 // --- ()
 const int PUMP_PIN = 16;
 const int SOLENOID_PIN = 17;
